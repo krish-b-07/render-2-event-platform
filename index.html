@@ -2378,6 +2378,81 @@
         margin: 0 auto;
         border-top: 1px solid var(--line);
       }
+      .event-distribution {
+        margin-top: 28px;
+      }
+      .event-distribution-grid {
+        max-width: 760px;
+        margin: 0 auto;
+        display: block;
+      }
+      .event-breakdown-card {
+        background: #0c0c0c;
+        border: 1px solid var(--line);
+        padding: 18px 16px 12px;
+        transform: translateX(18px);
+        opacity: 0;
+        animation: eventSlideIn 0.5s ease forwards;
+      }
+      @keyframes eventSlideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .event-distribution-toolbar {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 14px;
+      }
+      .event-distribution-select {
+        background: #0d0d0d;
+        border: 1px solid var(--line);
+        color: #fff;
+        padding: 10px 14px;
+        font: 600 12px "Century Gothic";
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        min-width: 220px;
+      }
+      .event-breakdown-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .event-breakdown-header span {
+        font: 700 16px "Century Gothic";
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #f0f0f0;
+      }
+      .event-breakdown-header strong {
+        color: var(--red);
+        font: 700 18px "Barlow Condensed";
+      }
+      .event-breakdown-list {
+        display: grid;
+        gap: 8px;
+      }
+      .event-breakdown-item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 10px 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+        font: 600 13px "Century Gothic";
+      }
+      .event-breakdown-item span {
+        color: #d4d4d4;
+      }
+      .event-breakdown-item strong {
+        color: var(--red);
+        font: 700 16px "Barlow Condensed";
+      }
       .points-graph {
         max-width: 760px;
         margin: 0 auto 42px;
@@ -2727,6 +2802,78 @@
         color: var(--red);
         white-space: nowrap;
       }
+      .admin-event-breakdown {
+        display: grid;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .event-total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 0;
+        border-top: 1px dashed var(--line);
+      }
+      .event-total span {
+        color: #d0d0d0;
+        font: 600 11px "Century Gothic";
+        text-transform: uppercase;
+      }
+      .event-controls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .event-stepper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .event-step-btn {
+        width: 24px;
+        height: 24px;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: #fff;
+        font: 700 18px "Century Gothic";
+        cursor: pointer;
+      }
+      .event-step-btn:hover {
+        border-color: var(--red);
+        color: var(--red);
+      }
+      .event-point-input {
+        width: 58px;
+        background: #111;
+        border: 1px solid var(--line);
+        color: #fff;
+        font: 700 16px "Barlow Condensed";
+        color: var(--red);
+        min-width: 28px;
+        text-align: center;
+        padding: 2px 4px;
+      }
+      .event-point-input:focus {
+        outline: none;
+        border-color: var(--red);
+      }
+      .event-remove-btn {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: #aaa;
+        padding: 5px 7px;
+        font: 600 8px "Century Gothic";
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        margin-left: 0;
+      }
+      .event-remove-btn:hover {
+        border-color: var(--red);
+        color: var(--red);
+      }
       .admin-list-actions {
         display: flex;
         gap: 6px;
@@ -2746,6 +2893,68 @@
       .admin-list-actions button:hover {
         border-color: var(--red);
         color: var(--red);
+      }
+      .event-register-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        gap: 20px;
+        margin-top: 32px;
+      }
+      .event-register-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        min-height: 96px;
+        padding: 22px 18px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line);
+        color: #f5f5f5;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+      .event-register-card:hover {
+        border-color: var(--red);
+        transform: translateY(-2px);
+      }
+      .event-register-card span {
+        font: 700 22px "Barlow Condensed";
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-align: center;
+        width: 100%;
+      }
+      .event-register-card small {
+        color: var(--muted);
+        font: 600 10px "Century Gothic";
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .event-register-empty {
+        color: var(--muted);
+        font: 600 12px "Century Gothic";
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .event-link-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .event-link-row input {
+        flex: 1;
+        background: #0b0b0b;
+        border: 1px solid var(--line);
+        color: #fff;
+        padding: 10px 12px;
+        font: 600 12px "Century Gothic";
+      }
+      .event-link-row input:focus {
+        outline: none;
+        border-color: var(--red);
       }
       .admin-points-actions {
         display: grid;
@@ -3012,7 +3221,7 @@
         <div class="links">
           <a class="active" href="#home">HOME</a><a href="#discover">DISCOVER</a
           ><a href="#events">EVENTS</a><a href="#roadmap">ROADMAP</a
-          ><a href="#leaderboard">LEADERBOARD</a><a href="#venuemap">MAP</a
+          ><a href="#leaderboard">LEADERBOARD</a><a href="#event-distribution">EVENTS</a><a href="#venuemap">MAP</a
           ><a href="#" id="navMyRender">MY RENDER</a
           ><a href="#contact">CONTACT</a
           ><button class="sound-toggle" id="soundToggle">SOUND OFF</button>
@@ -3252,6 +3461,10 @@
           Standings update as events are scored — check back as RENDER 2.0
           unfolds.
         </p>
+
+        <div class="event-distribution">
+          <div class="event-distribution-grid" id="eventDistributionGrid"></div>
+        </div>
       </div>
     </section>
 
@@ -3303,12 +3516,23 @@
       </div>
 
       <div class="admin-section">
+        <h4>Add Event</h4>
+        <div class="admin-row">
+          <input type="text" id="newEventName" placeholder="EVENT NAME" list="eventNameList" />
+          <button class="admin-btn" id="addEventBtn" type="button">
+            Add Event
+          </button>
+        </div>
+        <datalist id="eventNameList"></datalist>
+      </div>
+
+      <div class="admin-section">
         <h4>Add Points</h4>
         <div class="admin-row">
           <select id="pointsCollegeSelect"></select>
         </div>
         <div class="admin-row">
-          <input type="text" id="pointsEventName" placeholder="EVENT" />
+          <input type="text" id="pointsEventName" placeholder="EVENT" list="eventNameList" />
         </div>
         <div class="admin-row">
           <input type="number" id="pointsToAdd" placeholder="POINTS TO ADD" />
@@ -3319,7 +3543,12 @@
       </div>
 
       <div class="admin-section">
-        <h4>Registered Colleges</h4>
+        <h4>Registration Links</h4>
+        <div id="eventRegisterLinks"></div>
+      </div>
+
+      <div class="admin-section">
+        <h4>College Summary</h4>
         <ul class="admin-list" id="adminCollegeList"></ul>
       </div>
 
@@ -3400,11 +3629,27 @@
       </div>
     </section>
 
+    <section id="eventRegisterSection">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">10 / Register now</div>
+            <h2>EVENT <span class="red">REGISTRATION</span></h2>
+          </div>
+          <p class="lead">
+            Select an event to open its Google Form. Add a form link in the admin
+            panel to activate each registration box.
+          </p>
+        </div>
+        <div class="event-register-grid" id="eventRegisterGrid"></div>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">10 / The people</div>
+            <div class="kicker">11 / The people</div>
             <h2>THE PEOPLE BEHIND <span class="red">RENDER</span></h2>
           </div>
           <p class="lead">
@@ -5106,6 +5351,9 @@
           return body;
         };
         let colleges = [];
+        let eventNames = [];
+        const EVENT_NAMES_KEY = "render_event_names";
+        const EVENT_LINKS_KEY = "render_event_registration_links";
         const escapeValue = (value) =>
           String(value).replace(
             /[&<>"']/g,
@@ -5118,6 +5366,128 @@
                 "'": "&#39;",
               })[s],
           );
+
+        function loadStoredEventNames() {
+          try {
+            const raw = localStorage.getItem(EVENT_NAMES_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+          } catch (error) {
+            return [];
+          }
+        }
+
+        function saveStoredEventNames(names) {
+          try {
+            localStorage.setItem(EVENT_NAMES_KEY, JSON.stringify(names));
+          } catch (error) {
+            // no-op; localStorage may be unavailable
+          }
+        }
+
+        function loadStoredRegistrationLinks() {
+          try {
+            const raw = localStorage.getItem(EVENT_LINKS_KEY);
+            const parsed = raw ? JSON.parse(raw) : {};
+            return parsed && typeof parsed === "object" ? parsed : {};
+          } catch (error) {
+            return {};
+          }
+        }
+
+        function saveStoredRegistrationLinks(links) {
+          try {
+            localStorage.setItem(EVENT_LINKS_KEY, JSON.stringify(links));
+          } catch (error) {
+            // no-op; localStorage may be unavailable
+          }
+        }
+
+        const registrationLinks = loadStoredRegistrationLinks();
+        eventNames = loadStoredEventNames();
+
+        function renderEventSuggestions(rows) {
+          const names = [...new Set([
+            ...eventNames,
+            ...(rows || []).flatMap((college) =>
+              (college.event_totals || []).map((event) => event.event_name),
+            ),
+          ])].filter(Boolean).sort((a, b) => a.localeCompare(b));
+          eventNames = names;
+          saveStoredEventNames(names);
+          names.forEach((name) => {
+            if (!registrationLinks[name]) registrationLinks[name] = "";
+          });
+          saveStoredRegistrationLinks(registrationLinks);
+          const datalist = document.getElementById("eventNameList");
+          datalist.innerHTML = names
+            .map((name) => `<option value="${escapeValue(name)}"></option>`)
+            .join("");
+          renderRegistrationCards();
+          renderEventLinkEditor();
+        }
+
+        function renderRegistrationCards() {
+          const grid = document.getElementById("eventRegisterGrid");
+          if (!grid) return;
+          const names = [...new Set(eventNames)].filter(Boolean).sort((a, b) => a.localeCompare(b));
+          if (!names.length) {
+            grid.innerHTML = '<div class="event-register-empty">No events added yet.</div>';
+            return;
+          }
+          grid.innerHTML = names
+            .map((name) => {
+              const url = String(registrationLinks[name] || "").trim();
+              return `
+                <button type="button" class="event-register-card" data-event-name="${escapeValue(name)}" ${url ? `onclick="window.open('${url}', '_blank', 'noopener,noreferrer')"` : ""}>
+                  <span>${escapeValue(name)}</span>
+                </button>
+              `;
+            })
+            .join("");
+
+          grid.querySelectorAll(".event-register-card").forEach((button) => {
+            const name = button.dataset.eventName;
+            if (!name) return;
+            button.addEventListener("click", () => {
+              const url = String(registrationLinks[name] || "").trim();
+              if (!url) {
+                alert("No Google Form link is set for this event yet. Add one in the admin dashboard.");
+                return;
+              }
+              window.open(url, "_blank", "noopener,noreferrer");
+            });
+          });
+        }
+
+        function renderEventLinkEditor() {
+          const container = document.getElementById("eventRegisterLinks");
+          if (!container) return;
+          const names = [...new Set(eventNames)].filter(Boolean).sort((a, b) => a.localeCompare(b));
+          if (!names.length) {
+            container.innerHTML = '<div class="admin-empty">No events added yet.</div>';
+            return;
+          }
+          container.innerHTML = names
+            .map((name) => {
+              const value = String(registrationLinks[name] || "");
+              return `
+                <div class="event-link-row">
+                  <input type="url" data-event-name="${escapeValue(name)}" value="${escapeValue(value)}" placeholder="Google Form link for ${escapeValue(name)}" />
+                </div>
+              `;
+            })
+            .join("");
+
+          container.querySelectorAll("input[data-event-name]").forEach((input) => {
+            input.addEventListener("change", () => {
+              const eventName = input.dataset.eventName;
+              registrationLinks[eventName] = input.value.trim();
+              saveStoredRegistrationLinks(registrationLinks);
+              renderRegistrationCards();
+            });
+          });
+        }
         function paintBoard(rows) {
           colleges = rows || [];
           const sorted = [...colleges].sort(
@@ -5147,10 +5517,84 @@
                 `<div class="board-row"><div class="board-rank">${String(i + 4).padStart(2, "0")}</div><div class="board-name">${escapeValue(c.name)}</div><div class="board-points">${c.points} PTS</div><div class="board-move same">—</div></div>`,
             )
             .join("");
+          renderEventDistribution(rows || []);
+        }
+        function renderEventDistribution(rows) {
+          const groups = new Map();
+          (rows || []).forEach((college) => {
+            (college.event_totals || []).forEach((event) => {
+              const name = event.event_name;
+              if (!groups.has(name)) groups.set(name, []);
+              groups.get(name).push({
+                name: college.name,
+                points: Number(event.points),
+              });
+            });
+          });
+
+          const grid = document.getElementById("eventDistributionGrid");
+          const sortedGroups = [...groups.entries()].sort(([a], [b]) =>
+            a.localeCompare(b),
+          );
+
+          if (!sortedGroups.length) {
+            grid.innerHTML = '<div class="admin-empty">No event totals recorded yet.</div>';
+            return;
+          }
+
+          const currentEvent =
+            grid.dataset.selectedEvent && groups.has(grid.dataset.selectedEvent)
+              ? grid.dataset.selectedEvent
+              : sortedGroups[0][0];
+
+          grid.dataset.selectedEvent = currentEvent;
+          const [eventName, items] = sortedGroups.find(
+            ([name]) => name === currentEvent,
+          ) || sortedGroups[0];
+          const sortedItems = [...items].sort(
+            (a, b) => b.points - a.points || a.name.localeCompare(b.name),
+          );
+          const total = sortedItems.reduce((sum, item) => sum + item.points, 0);
+
+          grid.innerHTML = `
+            <div class="event-distribution-toolbar">
+              <select class="event-distribution-select" id="eventDistributionSelect">
+                ${sortedGroups
+                  .map(
+                    ([name]) =>
+                      `<option value="${escapeValue(name)}" ${name === eventName ? 'selected' : ''}>${escapeValue(name)}</option>`,
+                  )
+                  .join("")}
+              </select>
+            </div>
+            <div class="event-breakdown-card">
+              <div class="event-breakdown-header">
+                <span>${escapeValue(eventName)}</span>
+                <strong>${total} PTS</strong>
+              </div>
+              <div class="event-breakdown-list">
+                ${sortedItems
+                  .map(
+                    (item, index) =>
+                      `<div class="event-breakdown-item"><span>${index + 1}. ${escapeValue(item.name)}</span><strong>${item.points}</strong></div>`,
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `;
+
+          const selectEl = document.getElementById("eventDistributionSelect");
+          if (selectEl) {
+            selectEl.addEventListener("change", (event) => {
+              grid.dataset.selectedEvent = event.target.value;
+              renderEventDistribution(rows);
+            });
+          }
         }
         async function refreshBoard() {
           const data = await api("/api/public/leaderboard");
           paintBoard(data.colleges);
+          renderEventSuggestions(data.colleges);
         }
         function replace(id) {
           const old = document.getElementById(id),
@@ -5193,7 +5637,49 @@
           const data = await api("/api/admin/colleges");
           paintBoard(data.colleges);
           colleges = data.colleges;
+          renderEventSuggestions(colleges);
           renderAdmin();
+        }
+        async function adjustEventPoints(collegeId, eventName, delta) {
+          try {
+            const data = await api("/api/admin/adjust-points", {
+              method: "POST",
+              body: JSON.stringify({
+                collegeId,
+                eventName,
+                points: delta,
+              }),
+            });
+            colleges = data.colleges;
+            paintBoard(colleges);
+            renderEventSuggestions(colleges);
+            renderAdmin();
+          } catch (error) {
+            alert(error.message);
+          }
+        }
+        async function setEventPoints(collegeId, eventName, newValue) {
+          const parsed = Number(newValue);
+          const target = Number.isFinite(parsed) ? Math.max(0, Math.floor(parsed)) : 0;
+
+          const college = colleges.find((item) => item.id === collegeId);
+          const currentEvent = (college?.event_totals || []).find(
+            (event) => event.event_name === eventName,
+          );
+          const currentValue = Number(currentEvent?.points || 0);
+          const delta = target - currentValue;
+
+          if (!Number.isFinite(parsed) || parsed < 0) {
+            await loadAdmin();
+            return;
+          }
+
+          if (delta === 0) {
+            await loadAdmin();
+            return;
+          }
+
+          await adjustEventPoints(collegeId, eventName, delta);
         }
         function renderAdmin() {
           const select = document.getElementById("pointsCollegeSelect"),
@@ -5207,82 +5693,104 @@
               .join("") || '<option value="">No colleges yet</option>';
           list.innerHTML = colleges.length
             ? colleges
-                .map(
-                  (c, i) =>
-                    `<li class="admin-list-row" data-id="${c.id}"><div class="admin-list-top"><div class="admin-list-name">${String(i + 1).padStart(2, "0")} — ${escapeValue(c.name)}</div><div class="admin-list-points">${c.points} PTS</div></div><div class="admin-points-actions"><input class="row-points" type="number" min="1" max="10000" placeholder="POINTS" aria-label="Points for ${escapeValue(c.name)}"><button type="button" class="row-add-points">ADD</button><button type="button" class="row-remove-points">REMOVE</button></div><div class="admin-list-actions"><button type="button" class="admin-rename">Rename</button><button type="button" class="admin-remove">REMOVE COLLEGE</button></div></li>`,
-                )
+                .map((c, i) => {
+                  const eventBreakdown = Array.isArray(c.event_totals) && c.event_totals.length
+                    ? c.event_totals
+                        .map(
+                          (event) =>
+                            `<div class="event-total"><span>${escapeValue(event.event_name)}</span><div class="event-controls"><div class="event-stepper"><button type="button" class="event-step-btn down" data-college-id="${c.id}" data-event-name="${encodeURIComponent(event.event_name)}">−</button><input type="number" class="event-point-input" min="0" step="1" value="${event.points}" data-college-id="${c.id}" data-event-name="${encodeURIComponent(event.event_name)}" /><button type="button" class="event-step-btn up" data-college-id="${c.id}" data-event-name="${encodeURIComponent(event.event_name)}">+</button></div><button type="button" class="event-remove-btn" data-college-id="${c.id}" data-event-name="${encodeURIComponent(event.event_name)}">Remove Event</button></div></div>`,
+                        )
+                        .join("")
+                    : '<div class="admin-empty">No event points yet.</div>';
+
+                  return `<li class="admin-list-row" data-id="${c.id}"><div class="admin-list-top"><div class="admin-list-name">${String(i + 1).padStart(2, "0")} — ${escapeValue(c.name)}</div><div class="admin-list-points">${c.points} PTS</div></div><div class="admin-list-actions"><button type="button" class="college-remove-btn" data-college-id="${c.id}">Remove College</button></div><div class="admin-event-breakdown">${eventBreakdown}</div></li>`;
+                })
                 .join("")
             : '<div class="admin-empty">No colleges added yet.</div>';
-          list.querySelectorAll(".admin-rename").forEach(
-            (button) =>
-              (button.onclick = async () => {
-                const row = button.closest(".admin-list-row"),
-                  college = colleges.find((c) => c.id === +row.dataset.id),
-                  name = prompt("Rename college:", college.name);
-                if (name && name.trim()) {
-                  try {
-                    const data = await api(
-                      `/api/admin/colleges/${college.id}`,
-                      {
-                        method: "PUT",
-                        body: JSON.stringify({ name: name.trim() }),
-                      },
-                    );
-                    colleges = data.colleges;
-                    paintBoard(colleges);
-                    renderAdmin();
-                  } catch (error) {
-                    alert(error.message);
-                  }
-                }
-              }),
-          );
-          list.querySelectorAll(".admin-remove").forEach(
-            (button) =>
-              (button.onclick = async () => {
-                const id = +button.closest(".admin-list-row").dataset.id;
-                if (confirm("Remove this college and its points history?")) {
-                  try {
-                    const data = await api(`/api/admin/colleges/${id}`, {
-                      method: "DELETE",
-                    });
-                    colleges = data.colleges;
-                    paintBoard(colleges);
-                    renderAdmin();
-                  } catch (error) {
-                    alert(error.message);
-                  }
-                }
-              }),
-          );
-          list.querySelectorAll(".row-add-points, .row-remove-points").forEach(
-            (button) =>
-              (button.onclick = async () => {
-                const row = button.closest(".admin-list-row");
-                const pointsInput = row.querySelector(".row-points");
-                const amount = Number(pointsInput.value);
-                if (!Number.isInteger(amount) || amount < 1)
-                  return alert("Enter a whole number of points.");
-                const delta = button.classList.contains("row-remove-points")
-                  ? -amount
-                  : amount;
-                try {
-                  const data = await api("/api/admin/adjust-points", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      collegeId: Number(row.dataset.id),
-                      points: delta,
-                    }),
-                  });
-                  pointsInput.value = "";
-                  colleges = data.colleges;
-                  paintBoard(colleges);
-                  renderAdmin();
-                } catch (error) {
-                  alert(error.message);
-                }
-              }),
-          );
+
+          list.querySelectorAll(".college-remove-btn").forEach((button) => {
+            button.addEventListener("click", async () => {
+              const collegeId = Number(button.dataset.collegeId);
+              const college = colleges.find((item) => item.id === collegeId);
+              if (!college) return;
+              try {
+                const data = await api(`/api/admin/colleges/${collegeId}`, {
+                  method: "DELETE",
+                });
+                colleges = data.colleges;
+                paintBoard(colleges);
+                renderEventSuggestions(colleges);
+                renderAdmin();
+              } catch (error) {
+                alert(error.message);
+              }
+            });
+          });
+
+          list.querySelectorAll(".event-step-btn").forEach((button) => {
+            button.addEventListener("click", async () => {
+              const collegeId = Number(button.dataset.collegeId);
+              const eventName = decodeURIComponent(button.dataset.eventName || "");
+              const college = colleges.find((item) => item.id === collegeId);
+              const currentEvent = (college?.event_totals || []).find(
+                (event) => event.event_name === eventName,
+              );
+              const currentValue = Number(currentEvent?.points || 0);
+              const delta = button.classList.contains("up") ? 1 : -1;
+
+              if (delta < 0 && currentValue <= 0) {
+                return;
+              }
+
+              await adjustEventPoints(collegeId, eventName, delta);
+            });
+          });
+
+          list.querySelectorAll(".event-remove-btn").forEach((button) => {
+            button.addEventListener("click", async () => {
+              const collegeId = Number(button.dataset.collegeId);
+              const eventName = decodeURIComponent(button.dataset.eventName || "");
+              if (!eventName) return;
+              try {
+                const data = await api(`/api/admin/events/${collegeId}/${encodeURIComponent(eventName)}`, {
+                  method: "DELETE",
+                });
+                colleges = data.colleges;
+                paintBoard(colleges);
+                renderEventSuggestions(colleges);
+                renderAdmin();
+              } catch (error) {
+                alert(error.message);
+              }
+            });
+          });
+
+          list.querySelectorAll(".event-point-input").forEach((input) => {
+            input.addEventListener("keydown", async (event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                await setEventPoints(
+                  Number(input.dataset.collegeId),
+                  decodeURIComponent(input.dataset.eventName || ""),
+                  input.value,
+                );
+              }
+            });
+            input.addEventListener("change", async () => {
+              await setEventPoints(
+                Number(input.dataset.collegeId),
+                decodeURIComponent(input.dataset.eventName || ""),
+                input.value,
+              );
+            });
+            input.addEventListener("blur", async () => {
+              await setEventPoints(
+                Number(input.dataset.collegeId),
+                decodeURIComponent(input.dataset.eventName || ""),
+                input.value,
+              );
+            });
+          });
         }
         replace("addCollegeBtn").addEventListener("click", async () => {
           const input = document.getElementById("newCollegeName");
@@ -5296,6 +5804,19 @@
           } catch (error) {
             alert(error.message);
           }
+        });
+        replace("addEventBtn").addEventListener("click", () => {
+          const input = document.getElementById("newEventName");
+          const value = input.value.trim();
+          if (!value) return;
+          eventNames = [...new Set([...eventNames, value])].sort((a, b) =>
+            a.localeCompare(b),
+          );
+          if (!registrationLinks[value]) registrationLinks[value] = "";
+          saveStoredEventNames(eventNames);
+          saveStoredRegistrationLinks(registrationLinks);
+          input.value = "";
+          renderEventSuggestions(colleges);
         });
         replace("addPointsBtn").addEventListener("click", async () => {
           const eventInput = document.getElementById("pointsEventName"),

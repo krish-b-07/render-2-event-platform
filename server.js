@@ -33,12 +33,20 @@ database.exec(`
   CREATE TABLE IF NOT EXISTS point_adjustments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     college_id INTEGER NOT NULL REFERENCES colleges(id) ON DELETE CASCADE,
+    event_name TEXT,
     points INTEGER NOT NULL CHECK (points != 0),
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 `);
 
 const adminPassword = process.env.ADMIN_PASSWORD || "render-admin";
+const pointAdjustmentColumns = database
+  .prepare("PRAGMA table_info(point_adjustments)")
+  .all();
+if (!pointAdjustmentColumns.some((column) => column.name === "event_name")) {
+  database.exec("ALTER TABLE point_adjustments ADD COLUMN event_name TEXT");
+}
+
 const existingAdmin = database
   .prepare("SELECT id FROM admins WHERE username = ?")
   .get("organizer");
@@ -75,21 +83,74 @@ function requireAdmin(request, response, next) {
   next();
 }
 
+function getCollegeEventTotal(collegeId, eventName) {
+  const row = database
+    .prepare(
+      `
+      SELECT COALESCE(SUM(total_points), 0) AS total
+      FROM (
+        SELECT points AS total_points FROM point_entries WHERE college_id = ? AND event_name = ?
+        UNION ALL
+        SELECT points AS total_points FROM point_adjustments WHERE college_id = ? AND event_name = ?
+      )
+    `,
+    )
+    .get(collegeId, eventName, collegeId, eventName);
+
+  return Number(row?.total || 0);
+}
+
 function getLeaderboard() {
-  return database
+  const colleges = database
     .prepare(
       `
     SELECT colleges.id, colleges.name,
-      COALESCE((SELECT SUM(points) FROM point_entries WHERE college_id = colleges.id), 0)
-        + COALESCE((SELECT SUM(points) FROM point_adjustments WHERE college_id = colleges.id), 0) AS points,
-      COUNT(point_entries.id) AS entries
+      (
+        COALESCE((SELECT SUM(points) FROM point_entries WHERE college_id = colleges.id), 0)
+        + COALESCE((SELECT SUM(points) FROM point_adjustments WHERE college_id = colleges.id), 0)
+      ) AS points
     FROM colleges
-    LEFT JOIN point_entries ON point_entries.college_id = colleges.id
-    GROUP BY colleges.id
     ORDER BY points DESC, colleges.name ASC
   `,
     )
     .all();
+
+  const eventTotals = database
+    .prepare(
+      `
+    SELECT college_id, event_name, SUM(points) AS points
+    FROM (
+      SELECT college_id, event_name, points FROM point_entries
+      UNION ALL
+      SELECT college_id, event_name, points
+      FROM point_adjustments
+      WHERE event_name IS NOT NULL AND TRIM(event_name) != ''
+    )
+    GROUP BY college_id, event_name
+    ORDER BY event_name ASC, college_id ASC
+  `,
+    )
+    .all();
+
+  const perCollegeEvents = new Map();
+  for (const row of eventTotals) {
+    if (!perCollegeEvents.has(row.college_id)) {
+      perCollegeEvents.set(row.college_id, []);
+    }
+    perCollegeEvents.get(row.college_id).push({
+      event_name: row.event_name,
+      points: Number(row.points),
+    });
+  }
+
+  return colleges.map((college) => ({
+    ...college,
+    points: Math.max(0, Number(college.points) || 0),
+    event_totals: (perCollegeEvents.get(college.id) || []).map((entry) => ({
+      ...entry,
+      points: Math.max(0, Number(entry.points) || 0),
+    })),
+  }));
 }
 
 app.get("/api/public/leaderboard", (_request, response) => {
@@ -206,6 +267,7 @@ app.post("/api/admin/points", requireAdmin, (request, response) => {
 app.post("/api/admin/adjust-points", requireAdmin, (request, response) => {
   const collegeId = Number(request.body?.collegeId);
   const points = Number(request.body?.points);
+  const eventName = String(request.body?.eventName || "").trim();
   if (
     !Number.isInteger(collegeId) ||
     !Number.isInteger(points) ||
@@ -220,10 +282,61 @@ app.post("/api/admin/adjust-points", requireAdmin, (request, response) => {
     .get(collegeId);
   if (!college)
     return response.status(404).json({ error: "College not found." });
-  database
-    .prepare("INSERT INTO point_adjustments (college_id, points) VALUES (?, ?)")
-    .run(collegeId, points);
+
+  if (eventName) {
+    const currentTotal = getCollegeEventTotal(collegeId, eventName);
+    if (currentTotal + points < 0) {
+      return response
+        .status(400)
+        .json({ error: "Event points cannot go below zero." });
+    }
+
+    database
+      .prepare(
+        "INSERT INTO point_adjustments (college_id, event_name, points) VALUES (?, ?, ?)",
+      )
+      .run(collegeId, eventName, points);
+  } else {
+    const currentTotal = database
+      .prepare(
+        `
+        SELECT
+          COALESCE((SELECT SUM(points) FROM point_entries WHERE college_id = ?), 0)
+          + COALESCE((SELECT SUM(points) FROM point_adjustments WHERE college_id = ?), 0) AS total
+      `,
+      )
+      .get(collegeId, collegeId);
+
+    if (Number(currentTotal?.total || 0) + points < 0) {
+      return response
+        .status(400)
+        .json({ error: "College total cannot go below zero." });
+    }
+
+    database
+      .prepare("INSERT INTO point_adjustments (college_id, points) VALUES (?, ?)")
+      .run(collegeId, points);
+  }
+
   response.status(201).json({ colleges: getLeaderboard() });
+});
+
+app.delete("/api/admin/events/:collegeId/:eventName", requireAdmin, (request, response) => {
+  const collegeId = Number(request.params.collegeId);
+  const eventName = decodeURIComponent(String(request.params.eventName || "")).trim();
+
+  if (!Number.isInteger(collegeId) || !eventName) {
+    return response.status(400).json({ error: "Invalid college or event name." });
+  }
+
+  database
+    .prepare("DELETE FROM point_entries WHERE college_id = ? AND event_name = ?")
+    .run(collegeId, eventName);
+  database
+    .prepare("DELETE FROM point_adjustments WHERE college_id = ? AND event_name = ?")
+    .run(collegeId, eventName);
+
+  response.json({ colleges: getLeaderboard() });
 });
 
 app.delete("/api/admin/colleges/:id", requireAdmin, (request, response) => {
