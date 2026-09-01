@@ -3527,6 +3527,16 @@
       </div>
 
       <div class="admin-section">
+        <h4>Remove Existing Event</h4>
+        <div class="admin-row">
+          <select id="existingEventSelect"></select>
+          <button class="admin-btn danger" id="removeExistingEventBtn" type="button">
+            Remove Event
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-section">
         <h4>Add Points</h4>
         <div class="admin-row">
           <select id="pointsCollegeSelect"></select>
@@ -5423,6 +5433,22 @@
           datalist.innerHTML = names
             .map((name) => `<option value="${escapeValue(name)}"></option>`)
             .join("");
+
+          const select = document.getElementById("existingEventSelect");
+          const removeBtn = document.getElementById("removeExistingEventBtn");
+          if (select) {
+            select.innerHTML = names.length
+              ? names
+                  .map(
+                    (name) => `<option value="${escapeValue(name)}">${escapeValue(name)}</option>`,
+                  )
+                  .join("")
+              : '<option value="">No events yet</option>';
+          }
+          if (removeBtn) {
+            removeBtn.disabled = !names.length;
+          }
+
           renderRegistrationCards();
           renderEventLinkEditor();
         }
@@ -5817,6 +5843,24 @@
           saveStoredRegistrationLinks(registrationLinks);
           input.value = "";
           renderEventSuggestions(colleges);
+        });
+        replace("removeExistingEventBtn").addEventListener("click", async () => {
+          const select = document.getElementById("existingEventSelect");
+          const eventName = select?.value?.trim();
+          if (!eventName) return;
+          if (!confirm(`Remove the event "${eventName}" from all colleges?`)) return;
+          try {
+            await api(`/api/admin/events/${encodeURIComponent(eventName)}`, {
+              method: "DELETE",
+            });
+            eventNames = eventNames.filter((name) => name !== eventName);
+            delete registrationLinks[eventName];
+            saveStoredEventNames(eventNames);
+            saveStoredRegistrationLinks(registrationLinks);
+            await loadAdmin();
+          } catch (error) {
+            alert(error.message);
+          }
         });
         replace("addPointsBtn").addEventListener("click", async () => {
           const eventInput = document.getElementById("pointsEventName"),

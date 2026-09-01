@@ -339,6 +339,21 @@ app.delete("/api/admin/events/:collegeId/:eventName", requireAdmin, (request, re
   response.json({ colleges: getLeaderboard() });
 });
 
+app.delete("/api/admin/events/:eventName", requireAdmin, (request, response) => {
+  const eventName = decodeURIComponent(String(request.params.eventName || "")).trim();
+
+  if (!eventName) {
+    return response.status(400).json({ error: "Invalid event name." });
+  }
+
+  database.prepare("DELETE FROM point_entries WHERE event_name = ?").run(eventName);
+  database
+    .prepare("DELETE FROM point_adjustments WHERE event_name = ?")
+    .run(eventName);
+
+  response.json({ colleges: getLeaderboard() });
+});
+
 app.delete("/api/admin/colleges/:id", requireAdmin, (request, response) => {
   const result = database
     .prepare("DELETE FROM colleges WHERE id = ?")
